@@ -1,0 +1,21 @@
+{% extends 'users.html.twig' %}
+{% block title %} Vos adresses{{ app.user.firstname }}
+{% endblock %}
+
+{% block body %}
+<div class="grix xs4 container">
+    <div class="col-xs4">
+        <h1 class="center">Vos adresses {{ app.user.firstname }} {{ app.user.name }}</h1>
+        <div class="center">
+            {% for adresse in app.user.adresses %}
+            <div class="col-xs3">
+                <label for="numeroperso">Numéro de voie</label>
+                <input type="text" name="numeroperso" value="{{ adresse.numero }}">
+                <label for="voieperso">Type de voie</label>
+                <input type="text" name="voieperso" value="{{ adresse.typevoie }}"></div>
+            {% endfor %}
+        </div>
+        {{ form(form) }}
+    </div>
+</div>
+{% endblock %}
