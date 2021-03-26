@@ -1,6 +1,7 @@
 {% extends 'users.html.twig' %} {% block title %} Bienvenue
 {{ app.user.firstname }}
-{% endblock %} {% block body %}
+{% endblock %}
+{% block body %}
 <div class="grix xs4 container">
   <div class="grix xs4 container">
     {% for message in app.flashes('error') %}
@@ -16,17 +17,12 @@
           </div>
           <div class="form-field">
             <label for="pass2">Confirmez le mot de passe</label>
-            <input
-              type="password"
-              id="pass2"
-              name="pass2"
-              class="form-control"
-            />
+            <input type="password" id="pass2" name="pass2" class="form-control" />
           </div>
           <button class="btn shadow-1 rounded-1 blue">Valider</button>
         </form>
       </div>
     </div>
-    {% endblock %}
   </div>
 </div>
+{% endblock %}
