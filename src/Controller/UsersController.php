@@ -96,22 +96,35 @@ class UsersController extends AbstractController
      */
     public function editAdresse(Request $request): Response
     {
-         $adresse= $this->getAdressePerso();
-         $em = $this->getDoctrine()->getManager();
-           
-            $form = $this->createForm(AdressesType::class, $adresse);
-            $form->handleRequest($request);
+        $em = $this->getDoctrine()->getManager();
+        
+        $form = $this->createForm(AdressesType::class);
+        $form->handleRequest($request);
 
-            if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
 
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($adresse);
-                $em->flush();
-    
-                $this->addFlash('message', 'Adresse mise à jour');
-                return $this->redirectToRoute('users');
-            };
+            $em = $this->getDoctrine()->getManager();
+            $adresses = new Adresses;
+            $adresses->settype($request->request->get('type'));
+            $adresses->setNumero($request->request->get('numero'));
+            $adresses->setTypevoie($request->request->get('typevoie'));
+            $adresses->setPostalCode($request->request->get('postalcode'));
+            $adresses->setLibelleVoie($request->request->get('libellevoie'));
+            $adresses->setComplementAdresse($request->request->get('complementAdresse'));
+            $adresses->setVille($request->request->get('ville'));
+            $adresses->setCountry($request->request->get('country'));
+            $adresses->setUsers($this->getUser('id'));
 
-        return $this->render('users/adresses.html.twig');
+            $em->persist($adresses);
+            $em->flush();
+
+            $this->addFlash('message', 'Adresse mise à jour');
+            return $this->redirectToRoute('users');
+        };
+        $adresses = $this->getDoctrine()
+            ->getRepository(Adresses::class)
+            ->findAll();
+
+        return $this->render('users/adresses.html.twig',['adresses' => $adresses,'form' => $form->createView()]);
     }
 }

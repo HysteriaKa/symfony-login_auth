@@ -34,4 +34,9 @@ class AdressesType extends AbstractType
             'data_class' => Adresses::class,
         ]);
     }
+
+    public function __toString()
+    {
+        return $this->numero;
+    }
 }

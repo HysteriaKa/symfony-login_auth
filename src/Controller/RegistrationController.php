@@ -41,7 +41,9 @@ class RegistrationController extends AbstractController
                 $passwordEncoder->encodePassword(
                     $user,
                     $form->get('plainPassword')->getData()
-                )
+                ),
+            $user->setName(" "),
+            $user->setFirstname(" ")
             );
 
             $entityManager = $this->getDoctrine()->getManager();
