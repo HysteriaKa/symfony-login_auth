@@ -58,9 +58,15 @@ class Users implements UserInterface
      */
     private $firstname;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Adresses::class, mappedBy="users", orphanRemoval=true)
+     */
+    private $adresses;
+
     public function __construct()
     {
         $this->annonces = new ArrayCollection();
+        $this->adresses = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -206,6 +212,36 @@ class Users implements UserInterface
     public function setFirstname(string $firstname): self
     {
         $this->firstname = $firstname;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Adresses[]
+     */
+    public function getAdresses(): Collection
+    {
+        return $this->adresses;
+    }
+
+    public function addAdress(Adresses $adress): self
+    {
+        if (!$this->adresses->contains($adress)) {
+            $this->adresses[] = $adress;
+            $adress->setUsers($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAdress(Adresses $adress): self
+    {
+        if ($this->adresses->removeElement($adress)) {
+            // set the owning side to null (unless already changed)
+            if ($adress->getUsers() === $this) {
+                $adress->setUsers(null);
+            }
+        }
 
         return $this;
     }

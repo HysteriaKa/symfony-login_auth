@@ -2,9 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Adresses;
 use App\Entity\Annonces;
+use App\Form\AdressesType;
 use App\Form\AnnoncesType;
-
 use App\Form\EditProfileType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -80,7 +81,7 @@ class UsersController extends AbstractController
 
                 $user->setPassword($passwordencoder->encodePassword($user, $request->request->get('pass')));
                 $em->flush();
-                $this->addFlash('message','Le mot de passe a été mis à jour');
+                $this->addFlash('message', 'Le mot de passe a été mis à jour');
 
                 return $this->redirectToRoute('users');
             } else {
@@ -88,5 +89,29 @@ class UsersController extends AbstractController
             }
         };
         return $this->render('users/editpass.html.twig');
+    }
+
+    /**
+     * @Route("/users/profil/adresses", name="users_profil_adresses")
+     */
+    public function editAdresse(Request $request): Response
+    {
+         $adresse= $this->getAdressePerso();
+         $em = $this->getDoctrine()->getManager();
+           
+            $form = $this->createForm(AdressesType::class, $adresse);
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($adresse);
+                $em->flush();
+    
+                $this->addFlash('message', 'Adresse mise à jour');
+                return $this->redirectToRoute('users');
+            };
+
+        return $this->render('users/adresses.html.twig');
     }
 }
