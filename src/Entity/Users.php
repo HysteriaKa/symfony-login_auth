@@ -63,6 +63,11 @@ class Users implements UserInterface
      */
     private $adresses;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $userType;
+
     public function __construct()
     {
         $this->annonces = new ArrayCollection();
@@ -242,6 +247,18 @@ class Users implements UserInterface
                 $adress->setUsers(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUserType(): ?string
+    {
+        return $this->userType;
+    }
+
+    public function setUserType(string $userType): self
+    {
+        $this->userType = $userType;
 
         return $this;
     }

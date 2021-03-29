@@ -97,7 +97,7 @@ class UsersController extends AbstractController
     public function editAdresse(Request $request): Response
     {
         $em = $this->getDoctrine()->getManager();
-        
+        // $user = $this->getUser();
         $form = $this->createForm(AdressesType::class);
         $form->handleRequest($request);
 
@@ -105,16 +105,16 @@ class UsersController extends AbstractController
 
             $em = $this->getDoctrine()->getManager();
             $adresses = new Adresses;
-            $test = $request->request->get('adresses');
-            $adresses->setType($test['type']);
-            $adresses->setNumero($test['numero']);
-            $adresses->setTypevoie($test['typevoie']);
-            $adresses->setPostalCode($test['postalCode']);
-            $adresses->setLibelleVoie($test['libellevoie']);
-            $adresses->setComplementAdresse($test['complementAdresse']);
-            $adresses->setVille($test['ville']);
-            $adresses->setCountry($test['country']);
-            $adresses->setUsers($this->getUser('id'));
+            $adressePerso = $request->request->get('adresses');
+            $adresses->setType($adressePerso['type']);
+            $adresses->setNumero($adressePerso['numero']);
+            $adresses->setTypevoie($adressePerso['typevoie']);
+            $adresses->setPostalCode($adressePerso['postalCode']);
+            $adresses->setLibelleVoie($adressePerso['libellevoie']);
+            $adresses->setComplementAdresse($adressePerso['complementAdresse']);
+            $adresses->setVille($adressePerso['ville']);
+            $adresses->setCountry($adressePerso['country']);
+            $adresses->setUsers($adressePerso->getUser('id'));
 
             $em->persist($adresses);
             $em->flush();
@@ -125,7 +125,8 @@ class UsersController extends AbstractController
         $adresses = $this->getDoctrine()
             ->getRepository(Adresses::class)
             ->findAll();
-
+        //  $userType = $this->getDoctrine()->getRepository(Users::class)  ->findAll();
+        //  if($userType == "professionnel") 
         return $this->render('users/adresses.html.twig',['adresses' => $adresses,'form' => $form->createView()]);
     }
 }

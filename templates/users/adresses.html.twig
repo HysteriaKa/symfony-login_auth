@@ -7,15 +7,51 @@
     <div class="col-xs4">
         <h1 class="center">Vos adresses {{ app.user.firstname }} {{ app.user.name }}</h1>
         <div class="center">
-            {% for adresse in app.user.adresses %}
-            <div class="col-xs3">
-                <label for="numeroperso">Numéro de voie</label>
-                <input type="text" name="numeroperso" value="{{ adresse.numero }}">
-                <label for="voieperso">Type de voie</label>
-                <input type="text" name="voieperso" value="{{ adresse.typevoie }}"></div>
-            {% endfor %}
+            <h2>Votre adresse personnelle</h2>
         </div>
-        {{ form(form) }}
+
+        {#{% if app.user.userType == "particulier" %}#}
+        <div class="personnelle">
+            <div class="center">
+
+                {% for adresse in app.user.adresses %}
+                    {% if app.user.userType == "particulier" %}
+                        <div class="col-xs1">Numéro :</div>
+                        <div class="col-xs3">
+                        <label for="nbadressesperso">Numéro de voie</label>
+                        <input type="text" name="nbadressesperso" value="{{ adresse.numero }}"></div>
+                     {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        {#}
+            </div>
+        </div>
+        <div class="professionnelle center">
+            {{ form_start(form) }}
+            {{ form_row(form.type) }}
+            {{ form_row(form.numero) }}
+            {{ form_row(form.typevoie) }}
+            {{ form_row(form.postalCode) }}
+            {{ form_row(form.libellevoie) }}
+            {{ form_row(form.complementAdresse) }}
+            {{ form_row(form.ville) }}
+            {{ form_row(form.country) }}
+            {{form_row(form.Valider)}}
+            {{ form_end(form) }}
+        </div>
+
+
+
+        <h2>Votre adresse professionnelle </h2>
+
+
+
+        {% endif %}
+
+{#}
+
+
     </div>
-</div>
-{% endblock %}
+    <script src="{{asset('/js/dropdownchoise.js')}}"></script>
+    {% endblock %}
