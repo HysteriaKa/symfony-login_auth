@@ -105,14 +105,16 @@ class UsersController extends AbstractController
 
             $em = $this->getDoctrine()->getManager();
             $adresses = new Adresses;
-            $adresses->settype($request->request->get('type'));
-            $adresses->setNumero($request->request->get('numero'));
-            $adresses->setTypevoie($request->request->get('typevoie'));
-            $adresses->setPostalCode($request->request->get('postalcode'));
-            $adresses->setLibelleVoie($request->request->get('libellevoie'));
-            $adresses->setComplementAdresse($request->request->get('complementAdresse'));
-            $adresses->setVille($request->request->get('ville'));
-            $adresses->setCountry($request->request->get('country'));
+            
+            $test = $request->request->get('adresses');
+            $adresses->setType($test['type']);
+            $adresses->setNumero($test['numero']);
+            $adresses->setTypevoie($test['typevoie']);
+            $adresses->setPostalCode($test['postalCode']);
+            $adresses->setLibelleVoie($test['libellevoie']);
+            $adresses->setComplementAdresse($test['complementAdresse']);
+            $adresses->setVille($test['ville']);
+            $adresses->setCountry($test['country']);
             $adresses->setUsers($this->getUser('id'));
 
             $em->persist($adresses);

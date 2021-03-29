@@ -15,8 +15,11 @@ class AdressesType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('type', ChoiceType::class,['attr'=>['class'=>'center'], 'label'=>'Est-ce votre adresse','choices'=>['personnelle'=>'Personnelle','Professionnelle'=>'Professionnelle',
-             'Facturation'=>'Facturation']])
+            ->add('type', ChoiceType::class,['choices'=>[
+                'personnelle'=>1,
+                'Professionnelle'=>2,
+             'Facturation'=>3,]])
+
             ->add('numero', TextType::class)
             ->add('typevoie', TextType::class)
             ->add('libellevoie', TextType::class)
