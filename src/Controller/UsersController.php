@@ -105,7 +105,6 @@ class UsersController extends AbstractController
 
             $em = $this->getDoctrine()->getManager();
             $adresses = new Adresses;
-            
             $test = $request->request->get('adresses');
             $adresses->setType($test['type']);
             $adresses->setNumero($test['numero']);
