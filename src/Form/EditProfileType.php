@@ -26,7 +26,7 @@ class EditProfileType extends AbstractType
     ])
             ->add('name', TextType::class)
             ->add('firstname', TextType::class)
-           ->add('adresses', CollectionType::class, ['entry_type'=> AdressesType::class])
+        //    ->add('adresses', CollectionType::class, ['entry_type'=> AdressesType::class])
             ->add('Valider', SubmitType::class);
         ;
     }

@@ -7,7 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class AdressesType extends AbstractType
@@ -15,11 +15,7 @@ class AdressesType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('type', ChoiceType::class,['attr'=>['class'=>'center'], 'label'=>'Est-ce votre adresse',
-            'choices'=>[
-                'personnelle'=>'Personnelle',
-                'Professionnelle'=>'Professionnelle',
-             'Facturation'=>'Facturation']])
+            ->add('type',HiddenType::class)
              
             ->add('numero', TextType::class)
             ->add('typevoie', TextType::class)

@@ -96,6 +96,8 @@ class UsersController extends AbstractController
      */
     public function editAdresse(Request $request): Response
     {
+
+        
         $em = $this->getDoctrine()->getManager();
         // $user = $this->getUser();
         $form = $this->createForm(AdressesType::class);
@@ -125,8 +127,7 @@ class UsersController extends AbstractController
         $adresses = $this->getDoctrine()
             ->getRepository(Adresses::class)
             ->findAll();
-        //  $userType = $this->getDoctrine()->getRepository(Users::class)  ->findAll();
-        //  if($userType == "professionnel") 
-        return $this->render('users/adresses.html.twig',['adresses' => $adresses,'form' => $form->createView()]);
+       
+        return $this->render('users/adresses.html.twig',['adresses' => $adresses,'form' => $form->createView(),'formpro' => $form->createView()]);
     }
 }
