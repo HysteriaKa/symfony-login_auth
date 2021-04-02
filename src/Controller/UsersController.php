@@ -124,9 +124,10 @@ class UsersController extends AbstractController
             $this->addFlash('message', 'Adresse mise à jour');
             return $this->redirectToRoute('users');
         };
+        $id = $this->getUser()->getId();
         $adresses = $this->getDoctrine()
             ->getRepository(Adresses::class)
-            ->findAll();
+            ->findBy(['users'=>$id]);
        
         return $this->render('users/adresses.html.twig',['adresses' => $adresses,'form' => $form->createView(),'formpro' => $form->createView()]);
     }

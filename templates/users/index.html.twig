@@ -43,12 +43,7 @@
 			<div class="col-xs3">{{ annonce.title }}</div>
 		{% endfor %}
 		<div class="center">
-			{% for adresse in app.user.adresses %}
-			<div class="col-xs1">Numéro :</div>
-			<div class="col-xs3">
-				<label for="nbadressesperso">Numéro de voie</label>
-	<input type="text" name="nbadressesperso" value="{{ adresse.numero }}"></div>
-		{% endfor %}
+			
 		</div>
 	</div>
 {% endblock %}
