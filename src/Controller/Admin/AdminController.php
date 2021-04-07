@@ -38,7 +38,28 @@ class AdminController extends AbstractController
             $em->persist($categorie);
             $em->flush();
 
-            return $this->redirectToRoute('admin_home');
+            return $this->redirectToRoute('admin_categories_home');
+        };
+
+        return $this->render('admin/categories/ajout.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+     /**
+     * @Route("/categories/modifier/{id}", name="categories_modifier")
+     */
+    public function ModifCategorie(Categories $categorie, Request $request): Response
+    {
+        
+        $form = $this->createForm(CategoriesType::class, $categorie);
+
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()){
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($categorie);
+            $em->flush();
+
+            return $this->redirectToRoute('admin_categories_home');
         };
 
         return $this->render('admin/categories/ajout.html.twig', [
