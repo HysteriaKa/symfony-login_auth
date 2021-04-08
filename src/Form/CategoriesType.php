@@ -15,7 +15,7 @@ class CategoriesType extends AbstractType
     {
         $builder
             ->add('name', TextType::class)
-            
+            ->add('parent')
             ->add('valider', SubmitType::class)
         ;
     }
