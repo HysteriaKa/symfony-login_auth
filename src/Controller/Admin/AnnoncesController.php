@@ -45,10 +45,10 @@ class AnnoncesController extends AbstractController
        $em = $this->getDoctrine()->getManager();
        $em->remove($annonce);
        $em->flush();
-       
+
        $this->addFlash('message','Annonce supprimée avec succès');
 
-       return $this->redirectToRoute('admin-annonces_home');
+       return $this->redirectToRoute('admin_annonces_home');
         
     }
 }

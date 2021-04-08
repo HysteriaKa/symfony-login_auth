@@ -53,11 +53,11 @@
         </button>
     </div>
     <div class="modal-content">
-        Etes-vous sûr de vouloir supprimer cette annonce ?
+        
     </div>
     <div class="divider"></div>
     <div class="modal-footer">
-        <a href="" class="btn red">VALIDER</a>
+        <a href="" class="btn red inline">VALIDER</a>
         <button data-target="modal-delete"
             class="ml-auto btn shadow-1 rounded-1 small primary modal-trigger">Fermer</button>
     </div>
@@ -76,6 +76,13 @@
 
                 xmlhttp.open("get", `/admin/annonces/activer/${this.dataset.id}`)
                 xmlhttp.send()
+            })
+        }
+        let supprimer = document.querySelectorAll(".modal-trigger")
+        for(let bouton of supprimer){
+            bouton.addEventListener("click", function(){
+                document.querySelector(".modal-footer a").href = `/admin/annonces/supprimer/${this.dataset.id}`
+                document.querySelector(".modal-content").innerText = `Etes-vous sûr de vouloir supprimer l'annonce "${this.dataset.title}"?`
             })
         }
     }
