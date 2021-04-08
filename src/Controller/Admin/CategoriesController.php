@@ -1,31 +1,32 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Admin;
 
 use App\Entity\Categories;
 use App\Form\CategoriesType;
+use App\Repository\CategoriesRepository as RepositoryCategoriesRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/admin", name="admin_")
+ * @Route("/admin/categories", name="admin_categories_")
  */
 
-class AdminController extends AbstractController
+class CategoriesController extends AbstractController
 {
     /**
      * @Route("/", name="home")
      */
-    public function index(): Response
+    public function index(RepositoryCategoriesRepository $catsRepo): Response
     {
-        return $this->render('admin/index.html.twig', [
-            'controller_name' => 'AdminController',
+        return $this->render('admin/categories/index.html.twig', [
+            'categories' => $catsRepo->findAll(),
         ]);
     }
     /**
-     * @Route("/categories/ajout", name="categories_ajout")
+     * @Route("/ajout", name="ajout")
      */
     public function ajoutCategorie(Request $request): Response
     {
@@ -38,7 +39,7 @@ class AdminController extends AbstractController
             $em->persist($categorie);
             $em->flush();
 
-            return $this->redirectToRoute('admin_home');
+            return $this->redirectToRoute('admin_categories_home');
         };
 
         return $this->render('admin/categories/ajout.html.twig', [
