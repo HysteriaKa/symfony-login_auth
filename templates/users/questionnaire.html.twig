@@ -1,0 +1,23 @@
+{% extends "users.html.twig" %}
+
+{% block body %}
+
+
+{% block title %}complétez ce formulaire obligatoire{% endblock %}
+
+{{ form_start(form)}}
+{{ form_row(form.salaire)}}
+{{ form_row(form.question1)}}
+
+{{ form_end(form)}}
+
+{% endblock %}
+{% block javascripts %}
+<script>
+    Axentix.updateInputs()
+
+// With custom range of fields
+let fields = document.querySelectorAll('.form-material .form-field:not(.form-default) .form-control');
+
+Axentix.updateInputs(fields)
+</script>{% endblock %}

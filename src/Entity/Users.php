@@ -68,6 +68,21 @@ class Users implements UserInterface
      */
     private $userType;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $salaire;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $emploi;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $diplome;
+
     public function __construct()
     {
         $this->annonces = new ArrayCollection();
@@ -259,6 +274,42 @@ class Users implements UserInterface
     public function setUserType(string $userType): self
     {
         $this->userType = $userType;
+
+        return $this;
+    }
+
+    public function getSalaire(): ?string
+    {
+        return $this->salaire;
+    }
+
+    public function setSalaire(string $salaire): self
+    {
+        $this->salaire = $salaire;
+
+        return $this;
+    }
+
+    public function getEmploi(): ?string
+    {
+        return $this->emploi;
+    }
+
+    public function setEmploi(string $emploi): self
+    {
+        $this->emploi = $emploi;
+
+        return $this;
+    }
+
+    public function getDiplome(): ?string
+    {
+        return $this->diplome;
+    }
+
+    public function setDiplome(string $diplome): self
+    {
+        $this->diplome = $diplome;
 
         return $this;
     }

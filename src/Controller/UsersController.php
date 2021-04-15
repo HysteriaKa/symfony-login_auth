@@ -4,9 +4,12 @@ namespace App\Controller;
 
 use App\Entity\Adresses;
 use App\Entity\Annonces;
+use App\Entity\Questions;
 use App\Form\AdressesType;
 use App\Form\AnnoncesType;
 use App\Form\EditProfileType;
+use App\Form\QuestionnaireType;
+use App\Repository\QuestionsRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -97,7 +100,7 @@ class UsersController extends AbstractController
     public function editAdresse(Request $request): Response
     {
 
-        
+
         $em = $this->getDoctrine()->getManager();
         // $user = $this->getUser();
         $form = $this->createForm(AdressesType::class);
@@ -127,8 +130,42 @@ class UsersController extends AbstractController
         $id = $this->getUser()->getId();
         $adresses = $this->getDoctrine()
             ->getRepository(Adresses::class)
-            ->findBy(['users'=>$id]);
-       
-        return $this->render('users/adresses.html.twig',['adresses' => $adresses,'form' => $form->createView(),'formpro' => $form->createView()]);
+            ->findBy(['users' => $id]);
+
+        return $this->render('users/adresses.html.twig', ['adresses' => $adresses, 'form' => $form->createView(), 'formpro' => $form->createView()]);
+    }
+    /**
+     * @Route("/users/profil/questionnaire", name="users_profil_questionnaire")
+     */
+    public function questionnaire(QuestionsRepository $questions, Request $request): Response
+    {
+        $em = $this->getDoctrine()->getManager();
+        $user = $this->getUser()->getId();
+        $questionnaire = $this->getDoctrine()->getRepository(Questions::class)
+            ->findBy(['id_user' => $user]);
+        $form = $this->createForm(QuestionnaireType::class);
+        $form->handleRequest($request);
+        if (isset($questionnaire)) {
+
+            return $this->render(
+                'users/questionnaire.html.twig',
+                ['questionnaire' => '$questionnaire', 'form' => $form->createView()]
+            );
+        } else {
+            if ($form->isSubmitted() && $form->isValid()) {
+
+                $questionnaire = new Questions;
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($questionnaire);
+                $em->flush();
+                $this->addFlash('message', 'Votre questionnaire a bien été envoyé');
+                return $this->redirectToRoute('users');
+            }
+        }
+
+        return $this->render(
+            'users/questionnaire.html.twig',
+            ['questionnaire' => '$questionnaire', 'form' => $form->createView()]
+        );
     }
 }
